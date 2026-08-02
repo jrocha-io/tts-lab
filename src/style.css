@@ -13,6 +13,7 @@ h2.sec { font-size: 15px; margin: 0 0 10px; color: var(--ink); text-transform: n
 .warn { color: var(--warn); }
 section.lab { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 0 0 18px; background: #171a1f; }
 .bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
+.toggle { display: flex; align-items: center; gap: 6px; font-size: 14px; }
 select, button, input[type=range] { background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 14px; }
 button { cursor: pointer; }
 button:disabled { opacity: .45; cursor: not-allowed; }

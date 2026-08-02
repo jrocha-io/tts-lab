@@ -3,7 +3,8 @@ import type { Logger } from '@jrocha-io/logging';
 import { SAMPLES, TASKS } from '../content/samples.js';
 
 export interface TaskTableDeps {
-  readonly engine: TtsEngine;
+  /** The currently-active engine (may change as the user flips an engine radio). */
+  readonly getEngine: () => TtsEngine;
   readonly logger: Logger;
   readonly getLang: () => Lang;
   readonly getVoiceId: () => string | undefined;
@@ -69,19 +70,20 @@ async function speak(deps: TaskTableDeps, text: string, metric: HTMLElement, btn
   if (!text) return;
   metric.textContent = '…';
   btn.disabled = true;
+  const engine = deps.getEngine();
   try {
     const voiceId = deps.getVoiceId();
-    const m = await deps.engine.speak({
+    const m = await engine.speak({
       text,
       lang: deps.getLang(),
       rate: deps.getRate(),
       ...(voiceId !== undefined ? { voiceId } : {}),
     });
     metric.textContent = m.rtf !== undefined ? `RTF ${m.rtf.toFixed(2)}` : `${Math.round(m.synthMs)} ms`;
-    deps.logger.log(`[${deps.engine.meta.id}] ${text.slice(0, 24)} → ${metric.textContent}`);
+    deps.logger.log(`[${engine.meta.id}] ${text.slice(0, 24)} → ${metric.textContent}`);
   } catch (err) {
     metric.textContent = 'erro';
-    deps.logger.log(`[${deps.engine.meta.id}] ERRO: ${(err as Error).message}`);
+    deps.logger.log(`[${engine.meta.id}] ERRO: ${(err as Error).message}`);
   } finally {
     btn.disabled = false;
   }
