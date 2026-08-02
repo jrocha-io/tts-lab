@@ -12,6 +12,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@jrocha-io/tts": "^0.2.0",
+    "@jrocha-io/audio": "^0.1.0",
+    "@jrocha-io/logging": "^0.1.0"
+  },
   "devDependencies": {
     "typescript": "^5.7.0",
     "vite": "^8.0.0",
